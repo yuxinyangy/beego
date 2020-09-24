@@ -58,8 +58,9 @@ func (c *MainController) Post(){
 		return
 	}
 	fmt.Println("姓名",person.Name)
-	fmt.Println("年龄",person.Age)
-	fmt.Println("性别",person.Sex)
+	fmt.Println("生日",person.Birthday)
+	fmt.Println("地址",person.Address)
+	fmt.Println("昵称",person.Nick)
 	c.Ctx.WriteString("数据解析成功")
 }
 
