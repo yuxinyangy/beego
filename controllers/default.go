@@ -11,6 +11,9 @@ import (
 type MainController struct {
 	beego.Controller
 }
+type MaintoController struct {
+	beego.Controller
+}
 func (c *MainController) Get() {
 	//1.获取请求数据
 	userName :=c.Ctx.Input.Query("user")
@@ -58,12 +61,30 @@ func (c *MainController) Post(){
 		return
 	}
 	fmt.Println("姓名",person.Name)
+	fmt.Println("年龄",person.Age)
+	fmt.Println("性别",person.Sex)
+	c.Ctx.WriteString("数据解析成功")
+}
+
+//新建一个Post请求
+func (c *MaintoController) Post(){
+	var person models.Personto
+	dataBytes,err:=ioutil.ReadAll(c.Ctx.Request.Body)
+	if err!=nil{
+		c.Ctx.WriteString("数据接收错误，请重试")
+		return
+	}
+	err =json.Unmarshal(dataBytes,&person)
+	if err !=nil{
+		c.Ctx.WriteString("数据解析失败，请重试")
+		return
+	}
+	fmt.Println("姓名",person.Name)
 	fmt.Println("生日",person.Birthday)
 	fmt.Println("地址",person.Address)
 	fmt.Println("昵称",person.Nick)
 	c.Ctx.WriteString("数据解析成功")
 }
-
 //该方法用于处理delete请求
 func (c *MainController) Delete(){
 
